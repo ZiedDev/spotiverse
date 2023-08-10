@@ -232,8 +232,8 @@ function playThisSong(artist, albumName, songIndex) {
     isPlaying = false;
     playPauseButtonBehavior();
 
-    musicPlayerSong.textContent = artistsObject[artist][albumName].songs[1].artists;
-    musicPlayerArtists.textContent = artistsObject[artist][albumName].songs[1].name;
+    musicPlayerSong.textContent = artistsObject[artist][albumName].songs[1].name;
+    musicPlayerArtists.textContent = artistsObject[artist][albumName].songs[1].artists;
     musicPlayerImage.src = `./music-data/album-covers/${artist} - ${albumName}.jpg`;
 
     oldAudio = audio.attributes;
