@@ -37,7 +37,7 @@
 
 <body>
   <audio id="audio-id">
-    <source id="audio-source" src="./music-data/music/Annihilate (Spider-Man_ Across the Spider-Verse).m4a">
+    <source id="audio-source" src="">
   </audio>
 
   <header>
@@ -61,7 +61,15 @@
       <section class="music-player" id="music-player">
         <!-- <audio src="./music-data/music/Annihilate (Spider-Man_ Across the Spider-Verse).m4a" controls></audio> -->
 
-        <div class="music-info"> </div>
+        <div class="music-info">
+          <img class="music-player-image" id="music-player-image" src="./music-data/album-covers/None.jpg"
+            alt="Album cover">
+
+          <div class="music-details">
+            <h2 class="music-player-song" id="music-player-song">Song name</h2>
+            <h3 class="music-player-artists" id="music-player-artists">Artists</h3>
+          </div>
+        </div>
 
         <div class="control-section">
           <button class="play-pause-button material-symbols-rounded" id="play-pause-button"
@@ -70,10 +78,10 @@
           </button>
 
           <div class="timeline">
-            <h2 id="current-time">0</h2>
+            <h2 id="current-time">0:00</h2>
             <input type="range" name="timeline-slider" id="timeline-slider" class="timeline-slider slider" min="0"
               max="231" value="0" onchange="changeMusicCurrentTime()" onkeydown="event.preventDefault()">
-            <h2 id="music-duration">0</h2>
+            <h2 id="music-duration">0:00</h2>
           </div>
         </div>
 

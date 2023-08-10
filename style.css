@@ -10,9 +10,11 @@ body {
     background-color: black;
     color: aliceblue;
 
-    width: 100dvw;
+    width: 100%;
     margin: auto;
     scroll-behavior: smooth;
+
+    position: absolute;
 }
 
 h1 {
@@ -131,20 +133,44 @@ nav {
 
     position: fixed;
     bottom: 0;
+    padding: 1rem;
     height: 7rem;
     width: 100%;
 
     background-color: rgb(27, 27, 27);
 }
 
-.play-pause-button {
-    justify-self: center;
-    align-self: center;
+.music-player-song,
+.music-player-artists {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.music-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.music-info .music-player-image {
+    border-radius: 1rem;
+
+    height: 7rem;
+}
+
+.music-details {
+    grid-column: 2 span;
 }
 
 .control-section {
     display: grid;
     grid-template-columns: 1fr;
+}
+
+.play-pause-button {
+    justify-self: center;
+    align-self: center;
 }
 
 .timeline {
@@ -174,9 +200,11 @@ main {
     align-items: start;
     justify-content: start;
 
-    /* overflow-y: auto; */
+    overflow-x: hidden;
+    overflow-y: auto;
 
     width: 100%;
+    height: 65dvh;
     margin-right: 1rem;
     padding: 2rem;
 
@@ -185,6 +213,21 @@ main {
     background-color: rgb(27, 27, 27);
 
     border-radius: 1rem;
+}
+
+.recommended-section::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+
+.recommended-section::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 1rem;
+}
+
+.recommended-section::-webkit-scrollbar-thumb:hover {
+    background: #888;
 }
 
 main h2 {
@@ -197,8 +240,11 @@ main h2 {
 
 
 .recommended-section {
-    width: 100%;
-    overflow: auto;
+    padding: 1rem 2rem;
+    width: 95%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2rem;
@@ -265,7 +311,7 @@ main h2 {
 
 .album-meta {
     align-self: flex-end;
-    height: 80%;
+    height: 100%;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -273,14 +319,22 @@ main h2 {
 
 .album-header .album-title {
     font-size: 30pt;
-    grid-column-start: 1;
-    grid-column-end: 6;
+    grid-column: 3 span;
+
+    height: max-content;
+
+    margin: 1rem 0;
 
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.album-header h2 {
+    margin: 0;
+    height: 100%;
 }
 
 .album-songs {}
@@ -312,10 +366,21 @@ main h2 {
     margin-left: 1rem;
 }
 
-.album-song .song-name {}
+.album-song .song-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-.album-song .song-artists {}
-
+.album-song .song-artists {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .album-song .song-duration {}
 
@@ -325,45 +390,30 @@ main h2 {
     align-self: center;
 
     -webkit-appearance: none;
-    /* Override default CSS styles */
     appearance: none;
     width: 100%;
-    /* Full-width */
     height: 0.5rem;
-    /* Specified height */
     background: #717171;
-    /* Grey background */
     outline: none;
-    /* Remove outline */
     opacity: 0.7;
-    /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s;
-    /* 0.2 seconds transition on hover */
     transition: opacity .2s;
 
     box-shadow: var(--shadow-elevation-medium);
     border-radius: 1rem;
 }
 
-/* Mouse-over effects */
 .slider:hover {
     opacity: 1;
-    /* Fully shown on mouse-over */
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    /* Override default look */
     appearance: none;
     width: 1rem;
-    /* Set a specific slider handle width */
     height: 1rem;
-    /* Slider handle height */
-    background: #04AA6D;
-    /* Green background */
+    background: aliceblue;
     cursor: grab;
-    /* Cursor on hover */
 
     box-shadow: var(--shadow-elevation-medium-box);
     border-radius: 1rem;
@@ -373,26 +423,15 @@ main h2 {
     cursor: grabbing;
 }
 
-.slider::-moz-range-thumb {
-    appearance: none;
-    width: 1rem;
-    /* Set a specific slider handle width */
-    height: 1rem;
-    /* Slider handle height */
-    background: #04AA6D;
-    /* Green background */
-    cursor: -moz-grab;
-    /* Cursor on hover */
-
-    box-shadow: var(--shadow-elevation-medium-box);
-    border-radius: 1rem;
-}
-
-.slider::-moz-range-thumb:active {
-    cursor: -moz-grabbing;
-}
-
 @media only screen and (max-width: 425px) {
+    body {
+        height: 100%;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
     .main-page {
         flex-direction: column-reverse;
     }
@@ -448,6 +487,9 @@ main h2 {
         height: 4rem;
         width: 100%;
 
+        padding: 0rem;
+        width: 100%;
+
         background-color: rgb(27, 27, 27);
     }
 
@@ -491,14 +533,15 @@ main h2 {
 
     .album-meta {
         align-self: flex-end;
-        height: 80%;
+        height: 100%;
 
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .album-title {
-        font-size: 18pt;
+    .album-header .album-title {
+        text-align: center;
+        font-size: 22pt;
     }
 
     h2 {
@@ -509,19 +552,29 @@ main h2 {
         /* padding: 1rem; */
         top: 0;
         left: 0;
-        width: 100%;
+        width: 95%;
         overflow: auto;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 2rem;
+        gap: 1rem;
+
+        padding: 0.5rem;
+
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 
     .recommended-card {
         width: 7rem;
-        height: 9rem;
+        height: 7rem;
         background-color: rgba(255, 255, 255, 0.2);
         border-radius: 2rem;
         padding: 1rem;
+    }
+
+    .recommended-card h2,
+    .recommended-card h3 {
+        display: none;
     }
 
     .album-song {

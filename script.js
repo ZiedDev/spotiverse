@@ -93,12 +93,12 @@ function playPauseButtonBehavior() {
 }
 
 audio.ontimeupdate = function () {
-    timelineSlider.max = audio.duration
-    timelineSlider.value = audio.currentTime
+    timelineSlider.max = audio.duration;
+    timelineSlider.value = audio.currentTime;
     musicDuration.textContent =
-        `${Math.floor(audio.duration / 60)}:${String(Math.floor(audio.duration) % 60).padStart(2, '0')}`;
+        Math.floor(audio.duration / 60) > 0 ? `${Math.floor(audio.duration / 60)}:${String(Math.floor(audio.duration) % 60).padStart(2, '0')}` : "0:00";
     currentTime.textContent =
-        `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime) % 60).padStart(2, '0')}`
+        `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime) % 60).padStart(2, '0')}`;
 }
 
 function changeMusicCurrentTime() {
@@ -192,7 +192,7 @@ let artistsObject = {
 const albumCover = document.getElementById("album-cover");
 const albumTitle = document.getElementById("album-title");
 const albumArtist = document.getElementById("album-artist");
-const ablumYear = document.getElementById("album-year");
+const albumYear = document.getElementById("album-year");
 const albumLength = document.getElementById("album-length");
 
 const albumSongs = document.getElementById("album-songs");
@@ -203,8 +203,11 @@ function changeAlbumContent(artist, albumName) {
     const createAlbumSong = `
 <button class="album-song" onclick="playThisSong('${artist}', '${albumName}')">
 <h2 class="song-index">${songIndex}</h2>
-<h2 class="song-name">${artistsObject[artist][albumName].songs[songIndex].name} <br><span class="song-artists">${artistsObject[artist][albumName].songs[songIndex].artists}</span>
+<div class="song-name-artists">
+<h2 class="song-name">${artistsObject[artist][albumName].songs[songIndex].name}</h2>
+<h2 class="song-artists">${artistsObject[artist][albumName].songs[songIndex].artists}</h2>
 </h2>
+</div>
 <h2 class="song-duration">${Math.floor(artistsObject[artist][albumName].songs[songIndex].duration / 60)}:${String(Math.floor(artistsObject[artist][albumName].songs[songIndex].duration) % 60).padStart(2, '0')}</h2>
 </button>`;
 
@@ -213,7 +216,7 @@ function changeAlbumContent(artist, albumName) {
     albumTitle.textContent = artistsObject[artist][albumName].name
 
     albumArtist.textContent = artistsObject[artist][albumName].artists
-    ablumYear.textContent = artistsObject[artist][albumName].year
+    albumYear.textContent = artistsObject[artist][albumName].year
     albumLength.textContent = artistsObject[artist][albumName].length + " Songs"
 
     albumSongs.innerHTML = createAlbumSong;
@@ -222,9 +225,20 @@ function changeAlbumContent(artist, albumName) {
 }
 
 function playThisSong(artist, albumName, songIndex) {
+    let oldAudio = Object(audio.attributes);
 
     audio.setAttribute('src', `./music-data/music/${artistsObject[artist][albumName].songs[1].artists} - ${artistsObject[artist][albumName].songs[1].name}.m4a`);
 
     isPlaying = false;
     playPauseButtonBehavior();
+
+    musicPlayerSong.textContent = artistsObject[artist][albumName].songs[1].artists;
+    musicPlayerArtists.textContent = artistsObject[artist][albumName].songs[1].name;
+    musicPlayerImage.src = `./music-data/album-covers/${artist} - ${albumName}.jpg`;
+
+    oldAudio = audio.attributes;
 }
+
+const musicPlayerSong = document.getElementById("music-player-song");
+const musicPlayerArtists = document.getElementById("music-player-artists");
+const musicPlayerImage = document.getElementById("music-player-image");
