@@ -8,7 +8,7 @@
   <link rel="apple-touch-startup-image" href="./Logo/Logo x512.png"
     media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="green">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="SpotiVerse">
   <link rel="apple-touch-icon" href="./Logo/Logo x72.png" sizes="72x72">
   <link rel="apple-touch-icon" href="./Logo/Logo x96.png" sizes="96x96">
@@ -28,6 +28,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
+
+  <!-- Linking other web stuff -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js
+    "></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/utils/Draggable.min.js
+    "></script>
 
   <!-- Linking my stuff -->
   <link rel="stylesheet" href="./style.css">
@@ -143,6 +149,13 @@
             <h2>AUSTIN</h2>
             <h3>Post Malone</h3>
           </div>
+
+          <div class="recommended-card" id="recommended-card5" onclick="changeToAlbum('The Weeknd', 'Starboy')">
+            <img src="./music-data/album-covers/The Weeknd - Starboy.jpg" alt="">
+
+            <h2>Starboy</h2>
+            <h3>The Weeknd</h3>
+          </div>
         </div>
 
         <div class="discovery-section">
@@ -189,6 +202,36 @@
 
     </main>
   </section>
+
+  <div class="full-screen-player-mobile" id=".full-screen-player-mobile">
+    <h2 class="show-full-screen material-symbols-rounded" id="show-full-screen">expand_less</h2>
+
+    <div class="music-info">
+      <img class="music-player-image" id="full_music-player-image" src="./music-data/album-covers/None.jpg"
+        alt="Album cover">
+
+      <div class="music-details">
+        <h2 class="music-player-song" id="full_music-player-song">Song name</h2>
+        <h3 class="music-player-artists" id="full_music-player-artists">Artists</h3>
+      </div>
+    </div>
+
+    <div class="control-section">
+      <button class="play-pause-button material-symbols-rounded" id="full_play-pause-button"
+        onclick="playPauseButtonBehavior()">
+        play_circle
+      </button>
+
+      <div class="timeline">
+        <h2 id="full_current-time">0:00</h2>
+        <input type="range" name="timeline-slider" id="full_timeline-slider" class="timeline-slider slider" min="0"
+          max="231" value="0" onchange="changeMusicCurrentTime()" onkeydown="event.preventDefault()">
+        <h2 id="full_music-duration">0:00</h2>
+      </div>
+    </div>
+
+    <div class="more-options"> </div>
+  </div>
 
 </body>
 

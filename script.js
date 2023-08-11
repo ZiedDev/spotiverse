@@ -62,8 +62,11 @@ function changeToLibrary() {
 
 // Timeline
 const timelineSlider = document.getElementById("timeline-slider");
+const full_timelineSlider = document.getElementById("full_timeline-slider")
 
 const playPauseButton = document.getElementById("play-pause-button");
+const full_playPauseButton = document.getElementById("full_play-pause-button");
+
 let isPlaying = false;
 
 const audio = document.getElementById("audio-id");
@@ -71,7 +74,10 @@ const audio = document.getElementById("audio-id");
 let audioDuration = audio.duration;
 
 const musicDuration = document.getElementById("music-duration");
+const full_musicDuration = document.getElementById("full_music-duration");
+
 const currentTime = document.getElementById("current-time");
+const full_currentTime = document.getElementById("full_current-time");
 
 function playAudio() {
     audio.play();
@@ -83,10 +89,12 @@ function pauseAudio() {
 function playPauseButtonBehavior() {
     if (isPlaying) {
         playPauseButton.textContent = "play_circle";
+        full_playPauseButton.textContent = "play_circle";
         pauseAudio();
         isPlaying = false;
     } else {
         playPauseButton.textContent = "pause_circle";
+        full_playPauseButton.textContent = "pause_circle";
         playAudio();
         isPlaying = true;
     }
@@ -95,10 +103,17 @@ function playPauseButtonBehavior() {
 audio.ontimeupdate = function () {
     timelineSlider.max = audio.duration;
     timelineSlider.value = audio.currentTime;
+
     musicDuration.textContent =
         Math.floor(audio.duration / 60) > 0 ? `${Math.floor(audio.duration / 60)}:${String(Math.floor(audio.duration) % 60).padStart(2, '0')}` : "0:00";
+
     currentTime.textContent =
         `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime) % 60).padStart(2, '0')}`;
+
+    full_timelineSlider.max = timelineSlider.max;
+    full_timelineSlider.value = timelineSlider.value;
+    full_musicDuration.textContent = musicDuration.textContent;
+    full_currentTime.textContent = currentTime.textContent
 }
 
 function changeMusicCurrentTime() {
@@ -176,13 +191,29 @@ let artistsObject = {
         'Spider-Man Into the Spider-Verse (Soundtrack From & Inspired by the Motion Picture)': {
             name: 'Spider-Man Into the Spider-Verse (Soundtrack From & Inspired by the Motion Picture)',
             year: 2018,
-            artists: ["VariousArtists"],
+            artists: ["Various Artists"],
             length: 13,
             songs: {
                 1: {
                     name: "Sunflower (Spider-Man_ Into the Spider-Verse)",
                     artists: "Post Malone, Swae Lee",
                     duration: 158
+                }
+            }
+        }
+    },
+
+    'The Weeknd': {
+        'Starboy': {
+            name: 'Starboy',
+            year: 2016,
+            artists: ["The Weeknd"],
+            length: 18,
+            songs: {
+                1: {
+                    name: "Starboy",
+                    artists: "The Weeknd, Daft Punk",
+                    duration: 230
                 }
             }
         }
@@ -236,9 +267,43 @@ function playThisSong(artist, albumName, songIndex) {
     musicPlayerArtists.textContent = artistsObject[artist][albumName].songs[1].artists;
     musicPlayerImage.src = `./music-data/album-covers/${artist} - ${albumName}.jpg`;
 
+    full_musicPlayerSong.textContent = musicPlayerSong.textContent;
+    full_musicPlayerArtists.textContent = musicPlayerArtists.textContent;
+    full_musicPlayerImage.src = musicPlayerImage.src;
+
     oldAudio = audio.attributes;
 }
 
 const musicPlayerSong = document.getElementById("music-player-song");
+const full_musicPlayerSong = document.getElementById("full_music-player-song");
+
 const musicPlayerArtists = document.getElementById("music-player-artists");
+const full_musicPlayerArtists = document.getElementById("full_music-player-artists");
+
 const musicPlayerImage = document.getElementById("music-player-image");
+const full_musicPlayerImage = document.getElementById("full_music-player-image");
+
+const menu = document.getElementById(".full-screen-player-mobile")
+const showFullScreen = document.getElementById("show-full-screen");
+let closedPosition = -(menu.offsetHeight - menu.offsetHeight * 9 / 100);
+
+
+Draggable.create(menu, {
+    type: "y",
+    throwProps: true, //enables the momentum-based flicking (requires ThrowPropsPlugin)
+    edgeResistance: 0.9, //you can set this to 1 if you don't want the user to be able to drag past the snap point. This controls how much resistance there is after it hits the max/min.
+    maxDuration: 0.3, //don't let the animation duration exceed 0.3 second (you can tweak this too of course)
+    bounds: { maxY: closedPosition, minY: 0 },
+    onClick: function () { //when the user clicks/taps on the menu without dragging, we'll toggle it...
+        if (this.target._gsTransform.y === closedPosition) {
+            TweenLite.to(this.target, 0.3, { y: 0 });
+            showFullScreen.textContent = "expand_less";
+        } else {
+            TweenLite.to(this.target, 0.3, { y: closedPosition });
+            showFullScreen.textContent = "expand_more";
+        }
+    },
+    snap: {
+        y: [0, closedPosition]
+    }
+});

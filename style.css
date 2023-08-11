@@ -150,6 +150,7 @@ nav {
 
 .music-info {
     display: grid;
+    gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
@@ -174,6 +175,8 @@ nav {
 }
 
 .timeline {
+    justify-self: center;
+    align-self: center;
     display: flex;
     gap: 0.25rem
 }
@@ -246,7 +249,7 @@ main h2 {
     overflow-x: auto;
     overflow-y: hidden;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 2rem;
 }
 
@@ -423,9 +426,14 @@ main h2 {
     cursor: grabbing;
 }
 
+.full-screen-player-mobile {
+    display: none;
+}
+
 @media only screen and (max-width: 425px) {
     body {
         height: 100%;
+        position: fixed;
     }
 
     h1 {
@@ -465,8 +473,17 @@ main h2 {
     }
 
     .control-section {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(4, 1fr);
         padding: 0 2rem;
+    }
+
+    .play-pause-button {
+        justify-self: center;
+        align-self: center;
+    }
+
+    .timeline {
+        grid-column: 3 span;
     }
 
     .more-options,
@@ -493,10 +510,6 @@ main h2 {
         background-color: rgb(27, 27, 27);
     }
 
-    .timeline {
-        /* display: none; */
-    }
-
     main {
         position: absolute;
 
@@ -513,6 +526,8 @@ main h2 {
         align-self: center;
 
         overflow: auto;
+
+        scroll-behavior: smooth;
     }
 
     .album-cover img {
@@ -555,13 +570,13 @@ main h2 {
         width: 95%;
         overflow: auto;
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0rem;
+        row-gap: 1rem;
 
         padding: 0.5rem;
 
-        overflow-x: auto;
-        overflow-y: hidden;
+        justify-items: center;
     }
 
     .recommended-card {
@@ -585,5 +600,62 @@ main h2 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         height: min-content;
+    }
+
+    .full-screen-player-mobile {
+        display: block;
+        position: absolute;
+        padding: 1rem;
+        top: 95%;
+        right: 0;
+        left: 0;
+        height: 100%;
+        border-radius: 2rem 2rem 0 0;
+        background-color: rgb(30, 30, 30);
+    }
+
+    .show-full-screen {
+        position: absolute;
+        margin: auto;
+        padding: 0;
+        top: 0;
+        right: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .full-screen-player-mobile .music-info {
+        margin: 2rem 0 0 0;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+
+        grid-template-columns: 1fr;
+    }
+
+    .full-screen-player-mobile .music-info .music-player-image {
+        height: 18rem;
+    }
+
+    .full-screen-player-mobile .music-info .music-details {
+        width: 100%;
+        text-align: center;
+    }
+
+    .full-screen-player-mobile .music-info .music-details h2 {
+        font-size: 18pt;
+    }
+
+    .full-screen-player-mobile .music-info .music-details h3 {
+        font-size: 16pt;
+    }
+
+    .full-screen-player-mobile .control-section {
+        margin-top: 1rem;
+        grid-template-columns: 1fr;
+    }
+
+    .full-screen-player-mobile .play-pause-button {
+        font-size: 60pt;
     }
 }
