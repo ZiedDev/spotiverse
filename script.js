@@ -110,14 +110,17 @@ audio.ontimeupdate = function () {
     currentTime.textContent =
         `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime) % 60).padStart(2, '0')}`;
 
-    full_timelineSlider.max = timelineSlider.max;
-    full_timelineSlider.value = timelineSlider.value;
-    full_musicDuration.textContent = musicDuration.textContent;
-    full_currentTime.textContent = currentTime.textContent
+    full_timelineSlider.max = audio.duration;
+    full_timelineSlider.value = audio.currentTime;
+
+    full_musicDuration.textContent = Math.floor(audio.duration / 60) > 0 ? `${Math.floor(audio.duration / 60)}:${String(Math.floor(audio.duration) % 60).padStart(2, '0')}` : "0:00";;
+
+    full_currentTime.textContent = `${Math.floor(audio.currentTime / 60)}:${String(Math.floor(audio.currentTime) % 60).padStart(2, '0')}`;
 }
 
 function changeMusicCurrentTime() {
     audio.currentTime = timelineSlider.value;
+    audio.currentTime = full_timelineSlider.value
 }
 
 timelineSlider.addEventListener("input", function () {
@@ -156,14 +159,14 @@ let artistsObject = {
     },
 
     'Connor Price': {
-        'Spinning': {
-            name: 'Spinning',
+        'Spinnin': {
+            name: 'Spinnin',
             year: 2022,
             artists: ["Connor Price", "Bens"],
             length: 1,
             songs: {
                 1: {
-                    name: "Spinning",
+                    name: "Spinnin",
                     artists: "Connor Price, Bens",
                     duration: 111
                 }
