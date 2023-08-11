@@ -612,15 +612,21 @@ main h2 {
         height: 100%;
         border-radius: 2rem 2rem 0 0;
         background-color: rgb(30, 30, 30);
+
+        transition: transform 200ms ease-in-out;
+    }
+
+    .show-full-screen-player-mobile {
+        transform: translateY(-90%);
     }
 
     .show-full-screen {
         position: absolute;
-        margin: auto;
+        margin: 0;
         padding: 0;
         top: 0;
-        right: 0;
         left: 0;
+        width: 100%;
         text-align: center;
     }
 

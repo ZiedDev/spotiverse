@@ -283,27 +283,20 @@ const full_musicPlayerArtists = document.getElementById("full_music-player-artis
 const musicPlayerImage = document.getElementById("music-player-image");
 const full_musicPlayerImage = document.getElementById("full_music-player-image");
 
-const menu = document.getElementById(".full-screen-player-mobile")
-const showFullScreen = document.getElementById("show-full-screen");
-let closedPosition = -(menu.offsetHeight - menu.offsetHeight * 9 / 100);
+const FullScreenPlayerMobile = document.getElementById(".full-screen-player-mobile")
+const showFullScreenButton = document.getElementById("show-full-screen");
 
+let isFullScreenPlayerMobileOpen = false;
 
-Draggable.create(menu, {
-    type: "y",
-    throwProps: true, //enables the momentum-based flicking (requires ThrowPropsPlugin)
-    edgeResistance: 0.9, //you can set this to 1 if you don't want the user to be able to drag past the snap point. This controls how much resistance there is after it hits the max/min.
-    maxDuration: 0.3, //don't let the animation duration exceed 0.3 second (you can tweak this too of course)
-    bounds: { maxY: closedPosition, minY: 0 },
-    onClick: function () { //when the user clicks/taps on the menu without dragging, we'll toggle it...
-        if (this.target._gsTransform.y === closedPosition) {
-            TweenLite.to(this.target, 0.3, { y: 0 });
-            showFullScreen.textContent = "expand_less";
-        } else {
-            TweenLite.to(this.target, 0.3, { y: closedPosition });
-            showFullScreen.textContent = "expand_more";
-        }
-    },
-    snap: {
-        y: [0, closedPosition]
+function showFullScreen() {
+    console.log(isFullScreenPlayerMobileOpen);
+    if (isFullScreenPlayerMobileOpen) {
+        FullScreenPlayerMobile.classList.remove("show-full-screen-player-mobile");
+        isFullScreenPlayerMobileOpen = false;
+        showFullScreenButton.textContent = "expand_less";
+    } else {
+        FullScreenPlayerMobile.classList.add("show-full-screen-player-mobile");
+        isFullScreenPlayerMobileOpen = true;
+        showFullScreenButton.textContent = "expand_more";
     }
-});
+}
