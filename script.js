@@ -114,16 +114,20 @@ function playPauseButtonBehavior() {
 }
 
 let isLoadingAudio = false;
+let isLoadFirstTime = false;
 
 audio.addEventListener("loadstart", loadingAudio);
 audio.addEventListener("loadeddata", loadedAudio);
 
 function loadingAudio() {
     isLoadingAudio = true;
-    playPauseButton.classList.add("loading")
-    playPauseButton.textContent = "cached";
-    full_playPauseButton.classList.add("loading")
-    full_playPauseButton.textContent = "cached";
+    if (!isLoadFirstTime) {
+        playPauseButton.classList.add("loading")
+        playPauseButton.textContent = "cached";
+        full_playPauseButton.classList.add("loading")
+        full_playPauseButton.textContent = "cached";
+    }
+    isLoadFirstTime = true
 }
 
 function loadedAudio() {
