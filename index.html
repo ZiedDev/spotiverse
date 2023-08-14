@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
   <!-- Webapp shortcut ios -->
   <link rel="apple-touch-startup-image" href="./Logo/Logo x512.png"
     media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
@@ -31,17 +32,18 @@
 
   <!-- Linking my stuff -->
   <link rel="stylesheet" href="./style.css">
+  <script src="./artists.js"></script>
   <script src="./script.js" defer></script>
   <title>SpotiVerse</title>
 </head>
 
 <body>
   <audio id="audio-id">
-    <source id="audio-source" src="">
+    <source id="audio-source" src="./music-data/music/500-milliseconds-of-silence.mp3">
   </audio>
 
   <header>
-    <h1>SpotiVerse</h1>
+    <h1 id="x">SpotiVerse</h1>
     <button class="material-symbols-rounded" id="account-button" onclick="changeToAccount()">account_circle</button>
   </header>
 
@@ -66,15 +68,27 @@
             alt="Album cover">
 
           <div class="music-details">
-            <h2 class="music-player-song" id="music-player-song">Song name</h2>
-            <h3 class="music-player-artists" id="music-player-artists">Artists</h3>
+            <div class="music-player-song-container">
+              <h2 class="music-player-song" id="music-player-song">Song name</h2>
+            </div>
+
+            <div class="music-player-song-container">
+              <h3 class="music-player-artists" id="music-player-artists">Artists</h3>
+            </div>
           </div>
         </div>
 
         <div class="control-section">
+
+
+
           <button class="play-pause-button material-symbols-rounded" id="play-pause-button"
             onclick="playPauseButtonBehavior()">
             play_circle
+          </button>
+
+          <button class="skip-next material-symbols-rounded" id="skip-next" onclick="skipThisSong()">
+            skip_next
           </button>
 
           <div class="timeline">
@@ -85,7 +99,22 @@
           </div>
         </div>
 
-        <div class="more-options"> </div>
+
+        <div class="more-options">
+          <div class="queue">
+            <button class="queue-button material-symbols-rounded" id="queue-button" onclick="changeToQueue()">
+              queue_music
+            </button>
+          </div>
+
+          <div class="volume-control">
+            <div class="volume-button material-symbols-rounded" id="volume-button" onclick="muteMusic()">
+              volume_up
+            </div>
+            <input type="range" name="volume-slider" id="volume-slider" class="volume-slider slider" min="0" max="100"
+              value="100" onkeydown="event.preventDefault()">
+          </div>
+        </div>
       </section>
 
     </section>
@@ -158,6 +187,11 @@
 
       </div>
 
+      <!-- Queue -->
+      <div class="queue-content hidden" id="queue-content">
+        queue
+      </div>
+
       <!-- Album -->
       <div class="album-content hidden" id="album-content">
         <div class="album-header">
@@ -186,12 +220,18 @@
 
       <!--Search-->
       <div class="search-content hidden" id="search-content">
-        <h2>Search</h2>
+        <h1>Search (Not Working)</h1>
+
+        <input class="search-box" id="search-box" type="text" placeholder="Write a song name, artist or an album name">
+
+        <div class="search-result">
+
+        </div>
       </div>
 
       <!--Library-->
       <div class="library-content hidden" id="library-content">
-        <h2>Library</h2>
+        <h1>Library(Not Working)</h1>
       </div>
 
     </main>
@@ -212,9 +252,17 @@
     </div>
 
     <div class="control-section">
+      <button class="skip-next material-symbols-rounded" id="full_skip-previous">
+        skip_previous
+      </button>
+
       <button class="play-pause-button material-symbols-rounded" id="full_play-pause-button"
         onclick="playPauseButtonBehavior()">
         play_circle
+      </button>
+
+      <button class="skip-next material-symbols-rounded" id="full_skip-next" onclick="skipThisSong()">
+        skip_next
       </button>
 
       <div class="timeline">
@@ -225,9 +273,17 @@
       </div>
     </div>
 
-    <div class="more-options"> </div>
-  </div>
+    <div class="more-options">
+      <div class="volume-control">
+        <div class="volume-button material-symbols-rounded" id="full_volume-button" onclick="muteMusic()">
+          volume_up
+        </div>
+        <input type="range" name="volume-slider" id="full_volume-slider" class="volume-slider slider" min="0" max="100"
+          value="100" onkeydown="event.preventDefault()">
+      </div>
+    </div>
 
+  </div>
 </body>
 
 </html>

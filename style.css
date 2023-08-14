@@ -1,3 +1,26 @@
+@font-face {
+    font-family: 'Material Symbols Rounded';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./Fonts/Google Material Font.woff2") format('woff2');
+}
+
+.material-symbols-rounded {
+    font-family: 'Material Symbols Rounded';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
 html,
 body {
     margin: 0;
@@ -5,7 +28,7 @@ body {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 200;
     background-color: black;
     color: aliceblue;
@@ -15,6 +38,8 @@ body {
     scroll-behavior: smooth;
 
     position: absolute;
+
+    user-select: none;
 }
 
 h1 {
@@ -90,13 +115,13 @@ button:active {
     transform: scale(80%);
 }
 
-/* button:focus {
+button:focus {
     font-variation-settings:
         'FILL' 1,
         'wght' 600,
         'GRAD' 0,
         'opsz' 200;
-} */
+}
 
 .clicked-button {
     font-variation-settings:
@@ -128,6 +153,8 @@ nav {
 }
 
 .music-player {
+    z-index: 5;
+
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
@@ -140,16 +167,25 @@ nav {
     background-color: rgb(27, 27, 27);
 }
 
+.music-player-song-container {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
 .music-player-song,
 .music-player-artists {
-    display: -webkit-box;
+    /* display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    overflow: hidden; */
+    word-break: keep-all;
+    width: max-content;
 }
 
 .music-info {
     display: grid;
+    width: fit-content;
     gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
 }
@@ -162,19 +198,54 @@ nav {
 
 .music-details {
     grid-column: 2 span;
+    display: grid;
+    gap: 0;
+    height: 70%;
+    align-items: center;
 }
 
 .control-section {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .play-pause-button {
-    justify-self: center;
+    padding-right: 1rem;
+    justify-self: end;
     align-self: center;
 }
 
+.skip-next {
+    padding-left: 1rem;
+    justify-self: start;
+    align-self: center;
+}
+
+.loading {
+    user-select: none;
+
+    animation-duration: 1000ms;
+    animation-name: loopingRotation;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+}
+
+@keyframes loopingRotation {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    50% {
+        transform: rotateZ(180deg)
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
 .timeline {
+    grid-column: 2 span;
     justify-self: center;
     align-self: center;
     display: flex;
@@ -188,6 +259,35 @@ nav {
 .timeline h2 {
     flex: 1;
 }
+
+.more-options {
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+.queue {
+    justify-self: center;
+    align-self: center;
+
+}
+
+.volume-control {
+    justify-self: center;
+    align-self: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+
+    width: 70%;
+    height: 100%;
+}
+
+.volume-button {}
+
+.volume-slider {}
 
 .main-page {
     display: flex;
@@ -430,6 +530,27 @@ main h2 {
     display: none;
 }
 
+.search-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-content h1 {
+    text-align: center;
+}
+
+.search-box {
+    align-self: center;
+    width: 60%;
+    padding: 2rem;
+    border: none;
+    background-color: black;
+    color: aliceblue;
+    border-radius: 1rem;
+}
+
 @media only screen and (max-width: 425px) {
     body {
         height: 100%;
@@ -473,17 +594,24 @@ main h2 {
     }
 
     .control-section {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 20% 20% 60%;
         padding: 0 2rem;
     }
 
     .play-pause-button {
         justify-self: center;
         align-self: center;
+        padding: 0;
+    }
+
+    .skip-next {
+        justify-self: center;
+        align-self: center;
+        padding: 0;
     }
 
     .timeline {
-        grid-column: 3 span;
+        grid-column: 1 span;
     }
 
     .more-options,
@@ -494,6 +622,7 @@ main h2 {
     .music-player {
         display: grid;
         grid-template-columns: 1fr;
+        grid-template-rows: auto max-content auto;
 
         align-self: center;
 
@@ -606,7 +735,7 @@ main h2 {
         display: block;
         position: absolute;
         padding: 1rem;
-        top: 95%;
+        bottom: -99%;
         right: 0;
         left: 0;
         height: 100%;
@@ -635,6 +764,7 @@ main h2 {
         display: grid;
         align-items: center;
         justify-items: center;
+        width: 100%;
 
         grid-template-columns: 1fr;
     }
@@ -648,20 +778,64 @@ main h2 {
         text-align: center;
     }
 
+    .full-screen-player-mobile .music-info .music-details {
+        grid-column: 2 span;
+        display: grid;
+        gap: 1rem;
+        height: min-content;
+        align-items: center;
+        justify-content: center;
+    }
+
     .full-screen-player-mobile .music-info .music-details h2 {
+        margin: 0;
         font-size: 18pt;
+        align-self: center;
+        justify-self: center;
     }
 
     .full-screen-player-mobile .music-info .music-details h3 {
+        margin: 0;
         font-size: 16pt;
+        align-self: center;
+        justify-self: center;
     }
 
     .full-screen-player-mobile .control-section {
         margin-top: 1rem;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
     .full-screen-player-mobile .play-pause-button {
         font-size: 60pt;
+    }
+
+    .full-screen-player-mobile .skip-next {}
+
+    .full-screen-player-mobile .more-options {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .full-screen-player-mobile .timeline {
+        grid-column: 3 span;
+        justify-self: center;
+        align-self: center;
+        display: flex;
+        gap: 0.25rem
+    }
+
+    .full-screen-player-mobile .volume-control {
+        justify-self: center;
+        align-self: center;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 1rem;
+
+        width: 60%;
+        height: 100%;
     }
 }
