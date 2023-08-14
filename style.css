@@ -115,13 +115,13 @@ button:active {
     transform: scale(80%);
 }
 
-button:focus {
+/* button:focus {
     font-variation-settings:
         'FILL' 1,
         'wght' 600,
         'GRAD' 0,
         'opsz' 200;
-}
+} */
 
 .clicked-button {
     font-variation-settings:
