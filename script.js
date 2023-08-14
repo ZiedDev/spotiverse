@@ -115,7 +115,7 @@ function playPauseButtonBehavior() {
 
 let isLoadingAudio = false;
 
-audio.addEventListener("load", loadingAudio);
+audio.addEventListener("loadstart", loadingAudio);
 audio.addEventListener("loadeddata", loadedAudio);
 
 function loadingAudio() {
@@ -259,11 +259,7 @@ function changeAlbumContent(artist, albumName) {
 let previousRandomSong
 
 function playThisSong(artist, albumName, songIndex) {
-
-    console.log(artist);
-
     if (artist && albumName /*&& songIndex*/) {
-        console.log("h");
         let oldAudio = Object(audio.attributes);
 
         audio.setAttribute('src', `./music-data/music/${artistsObject[artist][albumName].songs[1].artists} - ${artistsObject[artist][albumName].songs[1].name}.m4a`);
