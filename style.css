@@ -433,6 +433,7 @@ main h2 {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    align-self: end;
 }
 
 .album-header h2 {
