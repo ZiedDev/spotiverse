@@ -815,6 +815,7 @@ main h2 {
 
     .full-screen-player-mobile .music-player-song-container,
     .full-screen-player-mobile .music-player-artists-container {
+        justify-self: center;
         /* overflow: visible; */
     }
 
