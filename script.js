@@ -99,6 +99,33 @@ function pauseAudio() {
   audio.pause();
 }
 
+let isLoadingAudio = false;
+let isLoadFirstTime = false;
+
+// audio.addEventListener("loadstart", loadingAudio);
+// audio.addEventListener("loadeddata", loadedAudio);
+
+// function loadingAudio() {
+//   isLoadingAudio = true;
+//   if (isLoadFirstTime) {
+//     playPauseButton.classList.add("loading")
+//     playPauseButton.textContent = "cached";
+//     full_playPauseButton.classList.add("loading")
+//     full_playPauseButton.textContent = "cached";
+//   }
+//   isLoadFirstTime = true
+// }
+
+// function loadedAudio() {
+//   alert("loaded")
+//   isLoadingAudio = false;
+//   playPauseButton.classList.remove("loading")
+//   full_playPauseButton.classList.remove("loading")
+//   playPauseButton.textContent = "pause_circle";
+//   full_playPauseButton.textContent = "pause_circle";
+//   playAudio();
+// }
+
 function playPauseButtonBehavior() {
   if (isPlaying && !isLoadingAudio) {
     playPauseButton.textContent = "play_circle";
@@ -113,30 +140,6 @@ function playPauseButtonBehavior() {
   }
 }
 
-let isLoadingAudio = false;
-let isLoadFirstTime = false;
-
-audio.addEventListener("loadstart", loadingAudio);
-audio.addEventListener("loadeddata", loadedAudio);
-
-function loadingAudio() {
-  isLoadingAudio = true;
-  if (!isLoadFirstTime) {
-    playPauseButton.classList.add("loading")
-    playPauseButton.textContent = "cached";
-    full_playPauseButton.classList.add("loading")
-    full_playPauseButton.textContent = "cached";
-  }
-  isLoadFirstTime = true
-}
-
-function loadedAudio() {
-  isLoadingAudio = false;
-  playPauseButton.classList.remove("loading")
-  full_playPauseButton.classList.remove("loading")
-  playPauseButton.textContent = "pause_circle";
-  full_playPauseButton.textContent = "pause_circle";
-}
 
 let volume = volumeSlider.value / 100;
 let isMuted = false;
@@ -245,7 +248,8 @@ function changeAlbumContent(artist, albumName) {
 </h2>
 </div>
 <h2 class="song-duration">${Math.floor(artistsObject[artist][albumName].songs[songIndex].duration / 60)}:${String(Math.floor(artistsObject[artist][albumName].songs[songIndex].duration) % 60).padStart(2, '0')}</h2>
-</button>`;
+</button>
+`;
 
   albumCover.src = `./music-data/album-covers/${String(artist)} - ${String(albumName)}.jpg`;
 
@@ -334,6 +338,9 @@ const showFullScreenButton = document.getElementById("show-full-screen");
 
 let isFullScreenPlayerMobileOpen = false;
 
+const musicPlayerSongContainer = document.getElementById("music-player-song-container");
+const musicPlayerArtistsContainer = document.getElementById("music-player-artists-container");
+
 function showFullScreen() {
   if (isFullScreenPlayerMobileOpen) {
     // FullScreenPlayerMobile.classList.remove("show-full-screen-player-mobile");
@@ -398,4 +405,52 @@ const updateFullscreenY = (translateY) => {
 
 // Searching the artist.js
 
-const searchBox = document.getElementById("search-box");
+const searchBox = document.querySelector("[data-search-song-search-box]");
+
+const searchSongTemplate = document.querySelector("[data-search-song-template]");
+const searchSongContainer = document.querySelector("[data-search-song-container]");
+
+let artists = [];
+
+searchBox.addEventListener("input", function (e) {
+  const value = e.target.value.toLowerCase();
+  artists.forEach(artist => {
+    const isVisible = String(artist.artist).toLowerCase().includes(value) || String(artist.album).toLowerCase().includes(value) || String(artist.songName).toLowerCase().includes(value) || String(artist.songArtist).toLowerCase().includes(value)
+
+    artist.element.classList.toggle("hide", !isVisible);
+  })
+})
+
+fetch("./artists.json")
+  .then((res) => res.json())
+  .then(data => {
+    data.forEach(artist => {
+      artist.albums.forEach(album => {
+        const albumSong = searchSongTemplate.content.cloneNode(true).children[0];
+        const songImg = albumSong.querySelector("[data-search-song-img]");
+        const songName = albumSong.querySelector("[data-search-song-name]");
+        const songArtist = albumSong.querySelector("[data-search-song-artists]");
+        const songDuration = albumSong.querySelector("[data-search-song-duration]");
+        const songButton = albumSong.querySelector("[data-search-song-button]");
+
+        songImg.src = album.cover;
+        songName.textContent = album.songs.name;
+        songArtist.textContent = album.songs.artists;
+        songDuration.textContent = album.songs.duration;
+
+        albumSong.addEventListener("click", () => {
+          playThisSong(String(artist.artist), String(album.name));
+        })
+
+        searchSongContainer.append(albumSong);
+
+        artists.push({
+          artist: artist.artist,
+          album: album.name,
+          songName: album.songs.name,
+          songArtist: album.songs.artists,
+          element: albumSong
+        })
+      });
+    });
+  })

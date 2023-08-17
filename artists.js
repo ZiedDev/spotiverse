@@ -7,7 +7,7 @@ let artistsObject = {
             length: 13,
             songs: {
                 1: {
-                    name: "Annihilate (Spider-Man_ Across the Spider-Verse)",
+                    name: "Annihilate (Spider-Man Across the Spider-Verse)",
                     artists: "Metro Boomin, Swae Lee, Lil Wayne, Offset",
                     duration: 231
                 }
@@ -69,7 +69,7 @@ let artistsObject = {
             length: 13,
             songs: {
                 1: {
-                    name: "Sunflower (Spider-Man_ Into the Spider-Verse)",
+                    name: "Sunflower (Spider-Man Into the Spider-Verse)",
                     artists: "Post Malone, Swae Lee",
                     duration: 158
                 }
@@ -94,22 +94,6 @@ let artistsObject = {
     },
 
     // TO CHANGE MUSIC HERE 31415
-
-    'The Weeknd': {
-        'Starboy': {
-            name: 'Starboy',
-            year: 2016,
-            artists: ["The Weeknd"],
-            length: 18,
-            songs: {
-                1: {
-                    name: "Starboy",
-                    artists: "The Weeknd, Daft Punk",
-                    duration: 230
-                }
-            }
-        }
-    },
 
     'Travis Scott, Bad Bunny, The Weeknd': {
         'K-POP': {
@@ -140,10 +124,8 @@ let artistsObject = {
                     duration: 193
                 }
             }
-        }
-    },
+        },
 
-    'Post Malone': {
         'beerbongs & bentleys': {
             name: 'beerbongs & bentleys',
             year: 2018,
@@ -158,5 +140,4 @@ let artistsObject = {
             }
         }
     },
-
 };

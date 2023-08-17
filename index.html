@@ -39,7 +39,7 @@
 
 <body>
   <audio id="audio-id">
-    <source id="audio-source" src="./music-data/music/500-milliseconds-of-silence.mp3">
+    <source id="audio-source">
   </audio>
 
   <header>
@@ -247,11 +247,12 @@
 
       <!--Search-->
       <div class="search-content hidden" id="search-content">
-        <h1>Search (Not Working)</h1>
+        <h1>Search</h1>
 
-        <input class="search-box" id="search-box" type="text" placeholder="Write a song name, artist or an album name">
+        <input class="search-box" id="search-box" type="text" placeholder="Write a song name, artist or an album name"
+          data-search-song-search-box>
 
-        <div class="search-result">
+        <div class="search-result" data-search-song-container>
 
         </div>
       </div>
@@ -273,8 +274,12 @@
         alt="Album cover">
 
       <div class="music-details">
-        <h2 class="music-player-song" id="full_music-player-song">Song name</h2>
-        <h3 class="music-player-artists" id="full_music-player-artists">Artists</h3>
+        <div class="music-player-song-container" id="music-player-song-container">
+          <h2 class="music-player-song" id="full_music-player-song">Song name</h2>
+        </div>
+        <div class="music-player-artists-container">
+          <h3 class="music-player-artists" id="full_music-player-artists">Artists</h3>
+        </div>
       </div>
     </div>
 
@@ -311,6 +316,18 @@
     </div>
 
   </div>
+
+  <template data-search-song-template>
+    <button class="album-song" data-search-song-button>
+      <img class="song-img" data-search-song-img />
+      <div class="song-name-artists" data-search-song-name-artists>
+        <h2 class="song-name" data-search-song-name></h2>
+        <h2 class="song-artists" data-search-song-artists></h2>
+        </h2>
+      </div>
+      <h2 class="song-duration" data-search-song-duration></h2>
+    </button>
+  </template>
 </body>
 
 </html>
