@@ -433,6 +433,7 @@ main h2 {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    align-self: end;
 }
 
 .album-header h2 {
@@ -866,7 +867,7 @@ main h2 {
         height: 100%;
     }
 
-    [data-search-song-name-artists] {
+    <<<<<<< HEAD [data-search-song-name-artists] {
         grid-column: 2 span;
         margin-right: 1rem;
     }
@@ -875,3 +876,8 @@ main h2 {
         display: none;
     }
 }
+
+=======
+}
+
+>>>>>>>8b9eed409b6088feb0195a8419f63237b89495f6
