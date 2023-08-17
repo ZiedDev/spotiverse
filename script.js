@@ -287,9 +287,6 @@ function playThisSong(artist, albumName, songIndex) {
   } else {
     // Hard Coded Ik that this is bad
 
-
-    // TO CHANGE MUSIC HERE 31415
-
     let libraryLength = 9;
 
     let artistArray =
@@ -300,7 +297,7 @@ function playThisSong(artist, albumName, songIndex) {
         ["Post Malone", "AUSTIN"],
         ["Various Artists", "Spider-Man Into the Spider-Verse (Soundtrack From & Inspired by the Motion Picture)"],
         ["The Weeknd", "Starboy"],
-        ["Travis Scott, Bad Bunny, The Weeknd", "K-POP"],
+        ["The Weeknd", "K-POP"],
         ["Post Malone", "Twelve Carat Toothache"],
         ["Post Malone", "beerbongs & bentleys"]
 
@@ -436,7 +433,7 @@ fetch("./artists.json")
         songImg.src = album.cover;
         songName.textContent = album.songs.name;
         songArtist.textContent = album.songs.artists;
-        songDuration.textContent = album.songs.duration;
+        songDuration.textContent = Math.floor(album.songs.duration / 60) > 0 ? `${Math.floor(album.songs.duration / 60)}:${String(Math.floor(album.songs.duration) % 60).padStart(2, '0')}` : "0:00";
 
         albumSong.addEventListener("click", () => {
           playThisSong(String(artist.artist), String(album.name));
